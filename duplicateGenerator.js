@@ -9,7 +9,8 @@
  * 
 */
 
-function generateDuplicates(module, moduleObject, formData, duplicatesCount){    
+function generateDuplicates(module, moduleObject, formData, duplicatesCount){ 
+    duplicatesCount ??= 10; // setting 10 as default count when duplicatesCount is null
     for (key in formData) {
         console.log("Storing : " + key + " " + formData[key]);
         moduleObject[key] = formData[key];
