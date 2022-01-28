@@ -3,8 +3,8 @@
  * @module -> the current module to which we need to create duplicates
  *       ex: ZDK.Apps.CRM.Leads
  * @moduleObject -> object of the current module
- *       ex: new ZDK.Apps.CRM.Leads.Models.Leads() * 
- * @formData -> the page data fetched using ZDK.getForm().getValue()
+ *       ex: new ZDK.Apps.CRM.Leads.Models.Leads()
+ * @formData -> the page data fetched using ZDK.getForm().getValues()
  * @duplicatesCount -> number of duplicates
  * 
 */
