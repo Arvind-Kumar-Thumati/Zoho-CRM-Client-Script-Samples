@@ -1,17 +1,15 @@
-let duplicatesCount = 5;
-let formData = ZDK.Page.getForm().getValues(); // collecting the data from form
+const duplicatesCount = 5;
+const formData = ZDK.Page.getForm().getValues(); // collecting the data from form
+const leadObjects = [];
 
-let tempLead = new ZDK.Apps.CRM.Leads.Models.Leads();
-
-// shallow copy the form data to the tempLead
-for (key in formData) {
-    log("Storing : " + key + " " + formData[key]);
-    tempLead[key] = formData[key];
-}
-
-let leadName = tempLead.First_Name;
 for (let i = 0; i < duplicatesCount; i++) {
-    tempLead.First_Name = leadName+" "+String(i+1);
-    let newLead = ZDK.Apps.CRM.Leads.create([tempLead]);
-    log("New lead "+i+" status " + newLead);
+  const tempLead = new ZDK.Apps.CRM.Leads.Models.Leads();
+  for (const key in formData) {
+      log("Storing : " + key + " " + formData[key]);
+      tempLead[key] = formData[key];
+  }
+  tempLead.First_Name = `${tempLead.First_Name} ${i + 1}`;
+  leadObjects.push(tempLead);
 }
+
+ZDK.Apps.CRM.Leads.create(leadObjects);

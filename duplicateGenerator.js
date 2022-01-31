@@ -1,22 +1,23 @@
 /*
  * A static resource used to generate duplicates
- * @module -> the current module to which we need to create duplicates
- *       ex: ZDK.Apps.CRM.Leads
- * @moduleObject -> object of the current module
- *       ex: new ZDK.Apps.CRM.Leads.Models.Leads()
- * @formData -> the page data fetched using ZDK.getForm().getValues()
- * @duplicatesCount -> number of duplicates
+ * @api_name -> the current module's api_name to which we need to create duplicates
+ * @duplicatesCount -> number of duplicates to create
  * 
 */
 
-function generateDuplicates(module, moduleObject, formData, duplicatesCount){ 
-    duplicatesCount ??= 10; // setting 10 as default count when duplicatesCount is null
-    for (key in formData) {
-        console.log("Storing : " + key + " " + formData[key]);
-        moduleObject[key] = formData[key];
+function generateDuplicates(api_name, duplicatesCount = 10) {
+    const formData = ZDK.Page.getForm().getValues();
+    const moduleObjects = [];
+
+
+    for (let i = 0; i < duplicatesCount; i++) {
+        const tempObject = new ZDK.Apps.CRM[api_name].Models[api_name]();
+        for (const key in formData) {
+            log("Storing : " + key + " " + formData[key]);
+            tempObject[key] = formData[key];
+        }
+        moduleObjects.push(tempObject);
     }
-    for(let i = 0; i < duplicatesCount; i++){
-        let newLead = module.create([moduleObject]);
-        console.log(newLead);
-    }
+
+    ZDK.Apps.CRM[api_name].create(moduleObjects);
 }
